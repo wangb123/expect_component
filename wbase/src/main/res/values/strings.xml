@@ -1,0 +1,4 @@
+<resources>
+    <string name="base_app_name">WBase</string>
+    <string name="base_app_bar">tool_bar_layout</string>
+</resources>

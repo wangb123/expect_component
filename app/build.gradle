@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+kapt {
+    arguments {
+        arg("moduleName", project.getName())
+    }
+}
+
+android {
+    compileSdkVersion rootProject.ext.config_compileSdkVersion
+    buildToolsVersion rootProject.ext.config_buildToolsVersion
+    defaultConfig {
+        applicationId "com.yaolan.expect"
+        minSdkVersion 15
+        targetSdkVersion rootProject.ext.config_targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        ndk {
+//            abiFilters "armeabi-v7a，x86"
+        }
+        resourcePrefix "app_"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    dataBinding {
+        enabled true
+    }
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "$api_kt"
+    implementation "$api_appcompat"
+
+    implementation "$api_arouter"
+    implementation "$api_arouter_annotation"
+    kapt "$api_arouter_compiler"
+
+    implementation project(':wbase')
+}
